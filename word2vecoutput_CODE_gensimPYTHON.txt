@@ -1,0 +1,96 @@
+$easy_install gensim
+>>> from gensim.models import word2vec
+>>> import logging
+>>> logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+>>> sentences = word2vec.Text8Corpus('all_in_one_line.txt')
+>>> sentences
+<gensim.models.word2vec.Text8Corpus object at 0x000000000812F0B8>
+>>> model = word2vec.Word2Vec(sentences, size=200)
+>>> vocab = list(model.vocab.keys())
+>>> vocab[:10]
+[u'four', u'prefix', u'Does', u'localized', u'payoff', u'regularize', u'Foundation', u'Efficiency', u'digit', u'experimentally
+
+>>> model['learn']
+array([ 0.38739979, -0.01600358, -0.15529545, -0.23992808, -0.10147893,
+       -0.08191692, -0.52272779, -0.35388643,  0.17168605,  0.11530982,
+       -0.12768561,  0.05932033, -0.18311973, -0.12945844, -0.02292417,
+        0.24135247,  0.08523097,  0.0963949 ,  0.20407979,  0.14403445,
+       -0.45551711,  0.18523458,  0.16910104, -0.32157141,  0.05387299,
+       -0.15673009,  0.09079353, -0.20251392, -0.28192118,  0.00936671,
+       -0.12449333,  0.10249998, -0.15914816,  0.01197129, -0.16736589,
+        0.40464991, -0.39421755,  0.11894567, -0.33818582, -0.34546137,
+       -0.59819913,  0.264164  , -0.08831019,  0.06429037,  0.107614  ,
+       -0.13325757, -0.13269718,  0.48706669,  0.30579469, -0.11066894,
+       -0.03570125, -0.0036043 ,  0.02048213, -0.28273851, -0.30426595,
+       -0.31731081, -0.56085944, -0.40023521, -0.00893558,  0.0346833 ,
+       -0.48774236,  0.14593787,  0.09465263,  0.22071131,  0.46419021,
+       -0.31493586, -0.08273074, -0.20954724,  0.64880073,  0.08164127,
+       -0.07362828, -0.1718777 , -0.18033251,  0.15748249, -0.30921951,
+        0.29915902, -0.35708803, -0.02057018,  0.432347  ,  0.25922099,
+       -0.3058255 ,  0.16088086, -0.09002761, -0.12663396, -0.01675645,
+       -0.28149328,  0.00861862, -0.10714444,  0.13419487, -0.23412459,
+       -0.2295983 ,  0.10945605, -0.30710715,  0.31490892, -0.19445004,
+       -0.11488469,  0.73275095,  0.52155417, -0.75718039, -0.66281843,
+        0.69907326, -0.24189125, -0.04975252, -0.26687145,  0.38485041,
+       -0.28167653,  0.08121654, -0.05294226,  0.09962425, -0.39192268,
+       -0.01291767, -0.34852698, -0.28604475,  0.13444684, -0.24250945,
+        0.20475113, -0.25128493,  0.04935057,  0.10139807,  0.69906628,
+        0.12230669,  0.27706784, -0.37535357,  0.27008474,  0.04556073,
+       -0.29624364,  0.30619851, -0.44620049,  0.21601006,  0.48917022,
+       -0.78151792,  0.20797457, -0.2448189 ,  0.14750661, -0.28534603,
+       -0.28825566,  0.80613279,  0.14986275, -0.03340486,  0.03859795,
+       -0.44435918, -0.71015853, -0.20784642,  0.25344756, -0.53572273,
+        0.00900905, -0.429708  , -0.58129859, -0.31582233, -0.02640578,
+       -0.49055448,  0.41621348, -0.2791695 ,  0.36213711,  0.12876415,
+        0.22447692, -0.49811944,  0.25548756,  0.19242485,  0.38631353,
+       -0.42235017,  0.09633715, -0.20584327, -0.19047818,  0.06536754,
+       -0.05977845, -0.09631686,  0.27738816,  0.26736736,  0.48325637,
+        0.18429838, -0.39625627, -0.06764123, -0.23661911,  0.10330034,
+        0.40804863, -0.17660871,  0.0981184 ,  0.36888206, -0.19194157,
+       -0.19853827,  0.17692646, -0.01983621,  0.26275828, -0.11425727,
+        0.26687315, -0.37224674, -0.09669979,  0.06929917,  0.38243952,
+        0.22854768,  0.02056655, -0.21373235,  0.29534858,  0.14963326,
+        0.28389284,  0.21624717, -0.36363602,  0.24261849, -0.08944718], dtype=float32)
+
+
+        >>> model.most_similar(['machine'])
+2016-04-25 07:59:56,650 : INFO : precomputing L2-norms of word weight vectors
+[(u'applications', 0.9599305391311646), (u'statistical', 0.9550727009773254), (u'application', 0.9390997886657715), (u'systems', 0.9
+390100836753845), (u'modeling', 0.928573727607727), (u'graphical', 0.9279091954231262), (u'framework', 0.9259744882583618), (u'Depen
+dency', 0.9217040538787842), (u'Networks', 0.9196670651435852), (u'adaptive', 0.9174565076828003)]
+
+
+#king - queen = man - woman” and its logical extension “king - queen + woman = man
+>>> model.most_similar(positive=['woman', 'king'], negative=['man'])
+
+
+###TO SAVE THE MODEL
+>>>model.save('machineLearningPapersModel.model')
+>>>model.save_word2vec_format('text.model.bin', binary=True)
+
+
+###TO USE AN SAVED MODEL
+>>> from gensim.models import word2vec
+>>> import logging
+>>> logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+>>> model1 = word2vec.Word2Vec.load_word2vec_format('text.model.bin', binary=True)
+>>> model1.most_similar(['regularize'])
+[(u'penalized', 0.9746426939964294), (u'sigmoid', 0.9705084562301636), (u'regularization', 0.9658078551292419), (u'penalty', 0.96432
+72161483765), (u'family', 0.9640487432479858), (u'constrained', 0.958977460861206), (u'polygonal', 0.9585950970649719), (u'explicit'
+, 0.9567710161209106), (u'unconstrained', 0.955554723739624), (u'modifying', 0.9554795622825623)]
+
+>>> model.doesnt_match("breakfast cereal dinner lunch".split())
+'cereal'
+
+>>> model.similarity('woman', 'man')
+0.73723527
+
+
+
+###DETECTING AN PHRASE FROM THE MODEL
+>>> sentences = word2vec.Text8Corpus('all_in_one_line_only_english_words.txt')
+>>> import gensim
+>>> bigram_transformer = gensim.models.Phrases(sentences)
+>>> sent=[u'the', u'article', u'deals', u'with', u'machine', u'learning']
+>>> print(bigram_transformer[sent])
+[u'the', u'article', u'deals', u'with', u'machine_learning'] #HERE Machine Learning is clubbed as a single sentence
